@@ -30,4 +30,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //引入materialDesign
+    implementation 'com.google.android.material:material:1.2.1'
+
+    //引入SwipeRefreshLayout RecyclerView
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    //图片加载库
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+
 }
