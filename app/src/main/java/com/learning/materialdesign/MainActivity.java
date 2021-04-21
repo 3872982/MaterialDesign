@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "nav_gallery", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_slideshow:
-                Toast.makeText(this, "nav_slideshow", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "nav_floatTab", Toast.LENGTH_SHORT).show();
+                goActivity(FloatTabActivity.class);
                 break;
             case R.id.nav_vip:
                 Toast.makeText(this, "nav_vip", Toast.LENGTH_SHORT).show();
