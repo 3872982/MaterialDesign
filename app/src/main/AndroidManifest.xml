@@ -24,6 +24,7 @@
         <activity android:name=".ToolbarActivity"/>
         <activity android:name=".FloatTabActivity"/>
         <activity android:name=".DetailActivity"/>
+        <activity android:name=".BottomNavigationViewActivity"/>
     </application>
 
 </manifest>

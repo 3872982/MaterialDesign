@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_bottom_navigation:
                 Toast.makeText(this, "nav_bottom_navigation", Toast.LENGTH_SHORT).show();
+                goActivity(BottomNavigationViewActivity.class);
                 break;
         }
         return true;
