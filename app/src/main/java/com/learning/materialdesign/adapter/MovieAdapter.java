@@ -16,7 +16,7 @@ import com.learning.materialdesign.bean.Subjects;
 
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private List<Subjects.SubjectBean> mSubjectList;
     private Context mContext;
 
@@ -29,6 +29,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false);
+        view.setOnClickListener(this);
         return new ItemHolder(view);
     }
 
@@ -42,6 +43,13 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public int getItemCount() {
         return mSubjectList.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(mOnItemClickListener != null){
+            mOnItemClickListener.onItemClick(v, (int) v.getTag());
+        }
     }
 
     private class ItemHolder extends RecyclerView.ViewHolder{
@@ -70,5 +78,16 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     .crossFade(2000)
                     .into(iv_icon);
         }
+    }
+
+    //===============================设置列表项点击监听事件
+    private LoadMoreAdapter.onItemClickListener mOnItemClickListener;
+
+    public interface onItemClickListener{
+        public void onItemClick(View view,int position);
+    }
+
+    public void setOnItemClickListener(LoadMoreAdapter.onItemClickListener onItemClickListener){
+        mOnItemClickListener = onItemClickListener;
     }
 }

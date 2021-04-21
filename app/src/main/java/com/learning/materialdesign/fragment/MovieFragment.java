@@ -1,5 +1,6 @@
 package com.learning.materialdesign.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,12 +8,16 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.learning.materialdesign.DetailActivity;
 import com.learning.materialdesign.R;
+import com.learning.materialdesign.adapter.LoadMoreAdapter;
 import com.learning.materialdesign.adapter.MovieAdapter;
 import com.learning.materialdesign.bean.Subjects;
 import com.learning.materialdesign.net.HttpMethod;
@@ -53,7 +58,7 @@ public class MovieFragment extends Fragment {
     }
 
     private void initView() {
-        System.out.println("===========initView");
+        //System.out.println("===========initView");
         mRvFragment.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mSrlFragment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -67,19 +72,19 @@ public class MovieFragment extends Fragment {
     }
 
     private void initData() {
-        System.out.println("===========initData");
+        //System.out.println("===========initData");
         mSrlFragment.setRefreshing(true);
 
         Subscriber<Subjects> subscriber = new Subscriber<Subjects>() {
             @Override
             public void onCompleted() {
-                System.out.println("===========onCompleted");
+                //System.out.println("===========onCompleted");
                 mSrlFragment.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
-                System.out.println("===========onError"+e.getMessage());
+                //System.out.println("===========onError"+e.getMessage());
                 mSrlFragment.setRefreshing(false);
             }
 
@@ -88,9 +93,19 @@ public class MovieFragment extends Fragment {
                 //第一次进
                 if(mMovieAdapter == null){
                     mSubjectList.addAll(subjects.subject);
-                    System.out.println("==========="+mSubjectList.size());
+                    //System.out.println("==========="+mSubjectList.size());
                     mMovieAdapter = new MovieAdapter(getContext(), mSubjectList);
                     mRvFragment.setAdapter(mMovieAdapter);
+                    mMovieAdapter.setOnItemClickListener(new LoadMoreAdapter.onItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), new Pair<View, String>(view.findViewById(R.id.iv_icon), "basic"));
+                            Intent intent = new Intent(getActivity(), DetailActivity.class);
+                            intent.putExtra("URL", mSubjectList.get(position).img);
+                            intent.putExtra("NAME", mSubjectList.get(position).title);
+                            startActivity(intent,activityOptionsCompat.toBundle());
+                        }
+                    });
                 }else {//说明从刷新进来的，这里偷懒没有实现加载更多的逻辑
                     mSubjectList.addAll(subjects.subject);
                     mMovieAdapter.notifyDataSetChanged();

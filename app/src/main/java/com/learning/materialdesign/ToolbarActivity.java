@@ -1,5 +1,6 @@
 package com.learning.materialdesign;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -123,6 +125,20 @@ public class ToolbarActivity extends AppCompatActivity {
                         }
                     }
                 },2000);
+            }
+        });
+
+        mLoadMoreAdapter.setOnItemClickListener(new LoadMoreAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //共享元素动画，其中第二个参数为要共享连接的本页控件，第三个参数为共享的暗语，只要对应了，才能实现共享
+                ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(ToolbarActivity.this,
+                        view.findViewById(R.id.iv_icon), "basic");
+
+                Intent intent = new Intent(ToolbarActivity.this,DetailActivity.class);
+                intent.putExtra("URL", mMovieList.get(position).getImages().getMedium());
+                intent.putExtra("NAME", mMovieList.get(position).getTitle());
+                startActivity(intent,activityOptionsCompat.toBundle());
             }
         });
     }
