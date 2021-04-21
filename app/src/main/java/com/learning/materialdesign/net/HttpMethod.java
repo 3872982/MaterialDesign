@@ -3,7 +3,7 @@ package com.learning.materialdesign.net;
 import android.util.Log;
 
 import com.learning.materialdesign.bean.HttpResult;
-import com.learning.materialdesign.bean.Subject;
+import com.learning.materialdesign.bean.Subjects;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -65,16 +65,10 @@ public class HttpMethod {
      * @param subscriber  观察者对象
      * @param page  页数
      */
-    public void getTopMovie(Subscriber<List<Subject>> subscriber, int page){
+    public void getTopMovie(Subscriber<Subjects> subscriber, int page){
         //将被观察者转换成我们期望的模式
-        Observable<List<Subject>> observable = mMovieService.getTopMovie(page)
-                .map(new Func1<HttpResult, List<Subject>>() {
-                    @Override
-                    public List<Subject> call(HttpResult httpResult) {
-                        return httpResult.data.subject;
-                    }
-                });
-//                .map(new HttpResultFunc<List<Subject>>());
+        Observable<Subjects> observable = mMovieService.getTopMovie(page)
+                .map(new HttpResultFunc<Subjects>());
 
         //添加线程管理 并 执行订阅
         doSubscribe(observable,subscriber);
@@ -92,19 +86,16 @@ public class HttpMethod {
     /**
      * 用来统一处理服务器传来的结果，处理ResultCode，ResultMessage等信息，返回我们想要的处理过后的信息
      *
-     * 这里只是模拟一下
-     *
      * @param <T> Subscriber真正需要的数据类型
      */
-//    private class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
-//
-//        @Override
-//        public T call(HttpResult<T> httpResult) {
-//            if(httpResult.data.total != 250){
-//                throw new ApiException(ApiException.USER_NOT_EXIST);
-//            }
-//            Log.d("NETWORK","response >> "+httpResult.data.subject);
-//            return httpResult.data.subject;
-//        }
-//    }
+    private class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
+
+        @Override
+        public T call(HttpResult<T> httpResult) {
+            if(httpResult.code != 200){
+                throw new ApiException(ApiException.NET_ERROR);
+            }
+            return httpResult.data;
+        }
+    }
 }

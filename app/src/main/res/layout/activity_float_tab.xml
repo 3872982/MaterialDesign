@@ -16,7 +16,6 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-
             app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
             app:contentScrim="#46a8ba"
             app:expandedTitleMarginEnd="48dp"
@@ -28,7 +27,6 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"/>
 <!--            android:layout_marginLeft="20dp"-->
@@ -59,7 +57,6 @@
 
             <!--指示器颜色-->
             <!-- app:tabIndicatorColor="#0835f8"-->
-
             <!--tab条目中字体颜色-->
             <!--app:tabSelectedTextColor="#0835f8"-->
 

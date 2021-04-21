@@ -20,6 +20,7 @@ import com.learning.materialdesign.fragment.MovieFragment;
 import com.learning.materialdesign.fragment.MoviesFragment;
 import com.learning.materialdesign.net.GlideImageLoader;
 import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
 import java.util.ArrayList;
@@ -122,8 +123,13 @@ public class FloatTabActivity extends AppCompatActivity {
         mBanner.setImageLoader(new GlideImageLoader());
         //设置图片集合
         Integer[] images = {R.mipmap.v0, R.mipmap.v1, R.mipmap.v2, R.mipmap.v3};
-        mBanner.setBannerAnimation(Transformer.ZoomIn);
+        //String[] titles = {"sdssd","sdsd","kwk","sddsg"};
+        mBanner.setBannerAnimation(Transformer.Default);
         mBanner.setImages(Arrays.asList(images));
+        //mBanner.setBannerTitles(Arrays.asList(titles));
+        // 显示圆形指示器
+        //mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        //mBanner.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用
         mBanner.start();
     }

@@ -14,7 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.learning.materialdesign.R;
 import com.learning.materialdesign.adapter.MovieAdapter;
-import com.learning.materialdesign.bean.Subject;
+import com.learning.materialdesign.bean.Subjects;
 import com.learning.materialdesign.net.HttpMethod;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class MovieFragment extends Fragment {
     private Unbinder mBind;
     private int mCurrentPage = 1;
     private boolean isFirstIn = true;
-    private List<Subject> mSubjectList = new ArrayList<>();
+    private List<Subjects.SubjectBean> mSubjectList = new ArrayList<>();
     private MovieAdapter mMovieAdapter;
 
 
@@ -70,7 +70,7 @@ public class MovieFragment extends Fragment {
         System.out.println("===========initData");
         mSrlFragment.setRefreshing(true);
 
-        Subscriber<List<Subject>> subscriber = new Subscriber<List<Subject>>() {
+        Subscriber<Subjects> subscriber = new Subscriber<Subjects>() {
             @Override
             public void onCompleted() {
                 System.out.println("===========onCompleted");
@@ -84,19 +84,15 @@ public class MovieFragment extends Fragment {
             }
 
             @Override
-            public void onNext(List<Subject> subjects) {
-
-//                for (Subject subject : subjects) {
-//                    System.out.println("===========onNext"+subject.toString());
-//                }
+            public void onNext(Subjects subjects) {
                 //第一次进
                 if(mMovieAdapter == null){
-                    mSubjectList.addAll(subjects);
+                    mSubjectList.addAll(subjects.subject);
                     System.out.println("==========="+mSubjectList.size());
                     mMovieAdapter = new MovieAdapter(getContext(), mSubjectList);
                     mRvFragment.setAdapter(mMovieAdapter);
                 }else {//说明从刷新进来的，这里偷懒没有实现加载更多的逻辑
-                    mSubjectList.addAll(subjects);
+                    mSubjectList.addAll(subjects.subject);
                     mMovieAdapter.notifyDataSetChanged();
                 }
             }

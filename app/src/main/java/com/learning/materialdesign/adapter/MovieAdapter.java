@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.learning.materialdesign.R;
-import com.learning.materialdesign.bean.Subject;
+import com.learning.materialdesign.bean.Subjects;
 
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Subject> mSubjectList;
+    private List<Subjects.SubjectBean> mSubjectList;
     private Context mContext;
 
-    public MovieAdapter(Context context,List<Subject> subjectList) {
+    public MovieAdapter(Context context,List<Subjects.SubjectBean> subjectList) {
         mContext = context;
         mSubjectList = subjectList;
     }
@@ -35,17 +35,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ItemHolder itemHolder = (ItemHolder)holder;
-
-        Subject subject = mSubjectList.get(position);
-        itemHolder.tv_name.setText(subject.title);
-        itemHolder.tv_quote.setText(subject.quote);
-        itemHolder.tv_director.setText(subject.director);
-        itemHolder.tv_star.setText(subject.score);
-        Glide.with(mContext).load(subject.img)
-                .centerCrop()
-                .crossFade(2000)
-                .into(itemHolder.iv_icon);
-//        itemHolder.bindView(mContext,mSubjectList.get(position));
+        itemHolder.bindView(mContext,mSubjectList.get(position));
         itemHolder.itemView.setTag(position);
     }
 
@@ -70,8 +60,15 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tv_star = itemView.findViewById(R.id.tv_star);
         }
 
-        public void bindView(Context context,Subject subject){
-
+        public void bindView(Context context, Subjects.SubjectBean subject){
+            tv_name.setText(subject.title);
+            tv_quote.setText(subject.quote);
+            tv_director.setText(subject.director);
+            tv_star.setText(subject.score);
+            Glide.with(mContext).load(subject.img)
+                    .centerCrop()
+                    .crossFade(2000)
+                    .into(iv_icon);
         }
     }
 }

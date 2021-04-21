@@ -36,10 +36,9 @@ public class GsonResponseBodyConvert<T> implements Converter<ResponseBody,T> {
 
         //httpResult只解析Result字段
         HttpResult httpResult = mGson.fromJson(response,HttpResult.class);
-        Log.d("NETWORK","response >> "+httpResult.data.total);
 
-        if(httpResult.data.total != 250){
-            throw new ApiException(ApiException.USER_NOT_EXIST);
+        if(httpResult.code != 200){
+            throw new ApiException(ApiException.NET_ERROR);
         }
         return mGson.fromJson(response,mType);
     }
