@@ -99,7 +99,8 @@ public class MovieFragment extends Fragment {
                     mMovieAdapter.setOnItemClickListener(new LoadMoreAdapter.onItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
-                            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), new Pair<View, String>(view.findViewById(R.id.iv_icon), "basic"));
+                            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                                    new Pair<View, String>(view.findViewById(R.id.iv_icon), "basic"));
                             Intent intent = new Intent(getActivity(), DetailActivity.class);
                             intent.putExtra("URL", mSubjectList.get(position).img);
                             intent.putExtra("NAME", mSubjectList.get(position).title);

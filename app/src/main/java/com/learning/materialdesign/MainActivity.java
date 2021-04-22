@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_vip:
                 Toast.makeText(this, "nav_vip", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this,VIPActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             case R.id.nav_bottom_navigation:
                 Toast.makeText(this, "nav_bottom_navigation", Toast.LENGTH_SHORT).show();
